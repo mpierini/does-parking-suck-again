@@ -22,7 +22,7 @@ def home(request):
 				location = cd['location'].split(',')
 				city = location[0]
 				state = location[1]
-				
+
 				# Call the API with a request
 				r = requests.get('http://api.espn.com/v1/sports/events/venues?apikey=ngac5qbzrdxnxakjwb46fd3m')
 				things = json.loads(r.text)
@@ -35,7 +35,3 @@ def home(request):
 			return render(request, 'index.html', {'status':status['error'], 'form':form})
 	form = LocationForm()
 	return render(request, 'index.html', {'form':form})
-
-
-
-print(r.text)
