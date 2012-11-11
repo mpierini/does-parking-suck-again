@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>DOES PARKING SUCK?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- styles -->
+    <link href='http://fonts.googleapis.com/css?family=Cabin+Condensed|Graduate' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Graduate' rel='stylesheet' type='text/css'>
+    <style>
+      body {
+        padding-top: 10px; /* 60px to make the container go all the way to the bottom of the topbar */
+        background: red;
+      }
+      .title {
+      	font-family: 'Graduate', cursive;
+      	font-size: 600%;
+      	color: white;
+      }
+      div {
+      	margin: 100px 10px 100px 10px;
+      }
+      .statusbig {
+      	font-family: 'Cabin Condensed', sans-serif;
+      	font-size: 250%;
+      	color: white;
+      }
+      .status {
+      	font-family: 'Cabin Condensed', sans-serif;
+      	font-size: 150%;
+      	color: white;
+      }
+      input {
+		padding: 6x 12x 6x 12x;
+		border: 1px solid #666666;
+		color: #666666;
+		font-size: 320%;
+	  }
+	  a {
+	  	color: #fff;
+	  }
+    </style>
+
+    <!-- HTML5, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+
+	    <div class="row">
+	    	<center>
+	    	<div>
+	    		<span class="title">
+	    			Does Parking Suck?
+	    		</span>
+	    	</div>
+
+{% if status %}
+<div>
+	<span class="statusbig">{{status}}</span>
+</div>
+{% endif %}
+{% if form %}
+<div>
+		<form action="/" method="post">{% csrf_token %}
+				<span class="text-error">{{ form.non_field_errors }}</span>
+            <table>
+            	<input id="id_location" type="text" name="location" maxlength="100" placeholder="city, state" /></td></tr>
+			</table>
+		</form>
+</div>
+{% else %}
+<div>
+	<span class="status">
+		Meanwhile, enjoy this information video about driving and/or parking.
+	</span>
+	<br>
+<iframe width="640" height="360" src="http://www.youtube.com/embed/?listType=playlist&list=PLCahKK7jpRshBNoUvGs-ch_Ny5JDiJrSq&showinfo=1" frameborder="0" allowfullscreen></iframe>
+</div>
+{% endif %}
+	    	</center>
+	    </div>
+
+    </div> <!-- /container -->
+
+        <br>
+        <footer>
+          <center>
+          	Copyright &copy; 2012 Parking Sucks, Inc.<br>
+          	Using <a href="https://developers.google.com/youtube/">Youtube</a> and <a href="http://developer.espn.com/docs">ESPN</a> APIs.
+          </center>
+          <br><br><br>
+        </footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>
+$('.input').keypress(function (e) {
+  if (e.which == 13) {
+    $('form#login').submit();
+    return false;
+  }
+});
+</script>
+
+  </body>
+</html>
