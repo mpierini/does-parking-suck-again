@@ -2,7 +2,7 @@
 
 ROOTDIR = 'c:/Documents and Settings/Michele/Desktop/CSstuff/parking'
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
