@@ -1,5 +1,4 @@
 does-parking-suck-again
 =======================
 
-the major edit to doesparkingsuck is the views.py file in which i have created a scraping mechanism 
-to acquire the sporting events data that this app needs.
+This is the rework of the Does Parking Suck? project. Without the ESPN API, I have used scraping to acquire major league game schedule information and have a file of arena location dictionaries to cross check with the user's city.
