@@ -1,6 +1,7 @@
 # Django settings for parking project.
 
-ROOTDIR = 'c:/Documents and Settings/Michele/Desktop/CSstuff/parking'
+ROOTDIR = '/home/michele/Desktop/does-parking-suck-again'
+#ROOTDIR = 'c:/Documents and Settings/Michele/Desktop/CSstuff/parking'
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
