@@ -1,7 +1,14 @@
 # Django settings for parking project.
+import os
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+#STATIC_ROOT = 'staticfiles'
+#STATIC_URL = '/static/'
 
-ROOTDIR = '/home/michele/Desktop/does-parking-suck-again'
-#ROOTDIR = 'c:/Documents and Settings/Michele/Desktop/CSstuff/parking'
+#STATICFILES_DIRS = (
+#    os.path.join(PROJECT_PATH, 'static'),
+#)
+
+#ROOTDIR = '/home/michele/Desktop/does-parking-suck-again'
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -27,7 +34,7 @@ DATABASES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -48,18 +55,20 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'parking/static/img')#ROOTDIR + '/parking/static/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = ''#'/static/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ROOTDIR + '/parking/static'
+STATIC_ROOT = 'staticfiles'
+#STATIC_ROOT = os.path.join(PROJECT_PATH, 'parking/static/css')
+#STATIC_ROOT = ROOTDIR + '/parking/static'
 #took out pre-existing dir name
 
 # URL prefix for static files.
@@ -68,6 +77,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_PATH, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -110,7 +120,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    ROOTDIR + '/parking/templates',
+    os.path.join(PROJECT_PATH, 'parking/templates'),
     #took out pre-existing dir name
 )
 
