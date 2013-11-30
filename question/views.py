@@ -2,12 +2,16 @@ from django.shortcuts import render, render_to_response
 from forms import LocationForm
 
 import urllib
-from datetime import date
+from datetime import date, datetime
 import calendar
 from bs4 import BeautifulSoup 
 # Beautiful soup stuff to get web scraped info
 
 import arenas
+
+from apscheduler.scheduler import Scheduler
+sched = Scheduler()
+sched.start()
 
 day = str(date.today().day)
 
@@ -53,7 +57,7 @@ def load_curr_arenas(url):
                     curr_day_list.append(item.text) 
     return curr_day_list
 
-def check_for_games(given_city, given_state):
+def get_curr_day_arenas():
     url_list = [
         'http://aol.sportingnews.com/nba/schedule',
         'http://aol.sportingnews.com/nhl/schedule',
@@ -61,7 +65,9 @@ def check_for_games(given_city, given_state):
         'http://aol.sportingnews.com/nfl/schedule',
     ]
     for url in url_list:
-        curr_day_list = load_curr_arenas(url)   
+        global curr_day_list
+        curr_day_list = load_curr_arenas(url)
+        global arenas_dict
         if curr_day_list:
             if 'nba' in url:
                 arenas_dict = arenas.nba_arenas
@@ -71,14 +77,19 @@ def check_for_games(given_city, given_state):
                 arenas_dict = arenas.mlb_arenas
             elif 'nfl' in url:
                 arenas_dict = arenas.nfl_arenas
-            cities_dict = {}
-            for key in arenas_dict.keys():
-                for item in curr_day_list:
-                    if key == item:
-                        cities_dict[arenas_dict[key]['city']] = arenas_dict[key]['state']
-                        for city in cities_dict.keys():
-                            if given_city == city.upper():
-                                return TrueStrunk and White
+
+sched.add_interval_job(get_curr_day_arenas, start_date='2013-11-30 00:01', hours=24)
+# Scheduling a job to scrape the day's locations once per 24 hrs
+
+def check_for_games(given_city, given_state):
+    cities_dict = {}
+    for key in arenas_dict.keys():
+        for item in curr_day_list:
+            if key == item:
+                cities_dict[arenas_dict[key]['city']] = arenas_dict[key]['state']
+                for city in cities_dict.keys():
+                    if given_city == city.upper():
+                        return True
     return False
 
 def sports(given_city, given_state):
