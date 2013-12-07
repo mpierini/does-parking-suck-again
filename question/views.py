@@ -9,10 +9,6 @@ from bs4 import BeautifulSoup
 
 import arenas
 
-from apscheduler.scheduler import Scheduler
-sched = Scheduler()
-sched.start()
-
 day = str(date.today().day)
 
 def home(request):
@@ -50,7 +46,9 @@ def load_curr_arenas(url):
     curr_day_list = []
     num_lines = 1
     for each in soup.find_all('th'):
-        if day in each.get_text():
+        date = each.get_text().strip()
+        if day == date[-2:].strip():
+        # Separating out the current number date
             for item in each.find_parent('table').find_all('td'):
                 num_lines += 1
                 if num_lines % 5 == 0:
@@ -67,21 +65,20 @@ def get_curr_day_arenas():
     for url in url_list:
         global curr_day_list
         curr_day_list = load_curr_arenas(url)
-        global arenas_dict
+        arenas_dict = {}
         if curr_day_list:
             if 'nba' in url:
-                arenas_dict = arenas.nba_arenas
+                arenas_dict.update(arenas.nba_arenas)
             elif 'nhl' in url:
-                arenas_dict = arenas.nhl_arenas
+                arenas_dict.update(arenas.nhl_arenas)
             elif 'mlb' in url:
-                arenas_dict = arenas.mlb_arenas
+                arenas_dict.update(arenas.mlb_arenas)
             elif 'nfl' in url:
-                arenas_dict = arenas.nfl_arenas
-
-sched.add_interval_job(get_curr_day_arenas, start_date='2013-11-30 00:01', hours=24)
-# Scheduling a job to scrape the day's locations once per 24 hrs
+                arenas_dict.update(arenas.nfl_arenas)
+        return arenas_dict    
 
 def check_for_games(given_city, given_state):
+    arenas_dict = get_curr_day_arenas()
     cities_dict = {}
     for key in arenas_dict.keys():
         for item in curr_day_list:
